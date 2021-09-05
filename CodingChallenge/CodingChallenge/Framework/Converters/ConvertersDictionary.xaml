@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CodingChallenge.Framework.Converters">
+    <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" WhenTrue="Visible" WhenFalse="Hidden"></local:BoolToVisibilityConverter>
+    <local:BoolToVisibilityConverter x:Key="BoolToHiddenConverter" WhenTrue="Hidden" WhenFalse="Visible"></local:BoolToVisibilityConverter>
+    <local:BoolToVisibilityConverter x:Key="BoolToCollapsedConverter" WhenTrue="Collapsed" WhenFalse="Visible"></local:BoolToVisibilityConverter>
+    <local:TransportStatusToVisibilityConverter x:Key="IsRecordingStatusToVisibilityConverter" TargetStatus="Recording" WhenEqualTargetStatus="Visible" WhenNotEqualTargetStatus="Hidden"></local:TransportStatusToVisibilityConverter>
+</ResourceDictionary>

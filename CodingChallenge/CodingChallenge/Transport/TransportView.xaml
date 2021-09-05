@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="CodingChallenge.Transport.TransportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CodingChallenge.Transport"
+             xmlns:locator="clr-namespace:CodingChallenge"
+             mc:Ignorable="d" 
+             DataContext="{Binding Transport, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding CueCountdown}"
+                   Margin="8"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="72"
+                   Visibility="{Binding CueCountdownVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                   Foreground="Red"></TextBlock>
+        <TextBlock Text="{Binding Controller.TimeCode, StringFormat=hh\\:mm\\:ss\\.f}"
+                   Margin="8"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Center" FontSize="72"
+                   Visibility="{Binding CueCountdownVisible, Converter={StaticResource BoolToHiddenConverter}}"></TextBlock>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Ellipse Width="20" Height="20" Margin="4" Grid.Column="1" 
+                     Fill="Green" ToolTip="Standby"></Ellipse>
+            <Ellipse Width="20" Height="20" Margin="4" Grid.Column="1" 
+                     Fill="Red" ToolTip="LIVE" 
+                     Visibility="{Binding Controller.Status, Converter={StaticResource IsRecordingStatusToVisibilityConverter}}"></Ellipse>
+            <Button Margin="8" Grid.Column="2" Width="75" Height="25" 
+                    Visibility="{Binding Controller.CanRecordCue, Converter={StaticResource BoolToVisibilityConverter}}" 
+                    Command="{Binding RecordCommand}">Start</Button>
+            <Button Margin="8" Grid.Column="2" Width="75" Height="25" 
+                    Visibility="{Binding Controller.CanStop, Converter={StaticResource BoolToVisibilityConverter}}" 
+                    Command="{Binding StopCommand}">Stop</Button>
+        </Grid>
+    </Grid>
+</UserControl>

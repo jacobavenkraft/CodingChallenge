@@ -70,8 +70,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Framework\BaseModel.cs" />
+    <Compile Include="Framework\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Framework\Converters\TransportStatusToVisibilityConverter.cs" />
+    <Compile Include="Framework\Decorators\MouseTrackerDecorator.cs" />
+    <Compile Include="RoamingImage\IRoamingImageController.cs" />
+    <Compile Include="RoamingImage\RoamingImageController.cs" />
+    <Compile Include="RoamingImage\RoamingImageView.xaml.cs">
+      <DependentUpon>RoamingImageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RoamingImage\RoamingImageViewModel.cs" />
+    <Compile Include="Transport\ITransportController.cs" />
+    <Compile Include="Transport\TransportController.cs" />
+    <Compile Include="Transport\TransportStatus.cs" />
+    <Compile Include="Transport\TransportView.xaml.cs">
+      <DependentUpon>TransportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Transport\TransportViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="Framework\Converters\ConvertersDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,6 +105,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RoamingImage\RoamingImageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Transport\TransportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -111,6 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="RoamingImage\Untitled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
