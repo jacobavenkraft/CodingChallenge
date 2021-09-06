@@ -19,6 +19,13 @@
             <MenuItem Header="File">
                 <MenuItem Header="Select Image" Command="{Binding GetImagePathCommand}"></MenuItem>
             </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Theme">
+                    <MenuItem Header="Dark" IsCheckable="True" IsChecked="{Binding IsDarkThemeEnabled,Mode=OneWay}" Command="{Binding EnableDarkThemeCommand}"></MenuItem>
+                    <MenuItem Header="Light" IsCheckable="True" IsChecked="{Binding IsLightThemeEnabled,Mode=OneWay}" Command="{Binding EnableLightThemeCommand}"></MenuItem>
+                    <MenuItem Header="Auto" IsCheckable="True" IsChecked="{Binding IsAutoThemeEnabled,Mode=OneWay}" Command="{Binding EnableAutoThemeCommand}"></MenuItem>
+                </MenuItem>
+            </MenuItem>
         </Menu>
         <transport:TransportView x:Name="TransportView1" Grid.Row="1"></transport:TransportView>
     </Grid>

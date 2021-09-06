@@ -1,3 +1,4 @@
+using CodingChallenge.Configuration;
 using CodingChallenge.Framework;
 using CodingChallenge.Interfaces;
 using CodingChallenge.RoamingImage;
@@ -40,13 +41,17 @@ namespace CodingChallenge.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
-            GetImagePathCommand = new RelayCommand(DoGetImagePath);            
+            GetImagePathCommand = new RelayCommand(DoGetImagePath);
+            EnableDarkThemeCommand = new RelayCommand(DoEnableDarkTheme);
+            EnableLightThemeCommand = new RelayCommand(DoEnableLightTheme);
+            EnableAutoThemeCommand = new RelayCommand(DoEnableAutoTheme);
             RoamingImageController = ServiceLocator.Current.GetInstance<IRoamingImageController>();
             TransportController = ServiceLocator.Current.GetInstance<ITransportController>();
             TransportController.PlayingStart += TransportController_PlayingStart;
             TransportController.RecordingStart += TransportController_RecordingStart;
             TransportController.RecordingStop += TransportController_RecordingStop;
             RefreshTitle();
+            RefreshThemeIndicators();
         }
 
         private void HideRoamingImageWindow()
@@ -99,6 +104,37 @@ namespace CodingChallenge.ViewModel
         public string Title { get => Get<string>(); set => Set(value); }
 
         public ITransportController TransportController { get; private set; }
+
+        public bool IsDarkThemeEnabled { get => Get<bool>(); set => Set(value); }
+
+        public bool IsLightThemeEnabled { get => Get<bool>(); set => Set(value); }
+
+        public bool IsAutoThemeEnabled { get => Get<bool>(); set => Set(value); }
+
+        public ICommand EnableDarkThemeCommand { get => Get<ICommand>(); set => Set(value); }
+
+        public ICommand EnableLightThemeCommand { get => Get<ICommand>(); set => Set(value); }
+
+        public ICommand EnableAutoThemeCommand { get => Get<ICommand>(); set => Set(value); }
+
+        private void DoEnableDarkTheme() => DoSwitchThemes(ThemeMode.Dark);
+
+        private void DoEnableLightTheme() => DoSwitchThemes(ThemeMode.Light);
+
+        private void DoEnableAutoTheme() => DoSwitchThemes(ThemeMode.Auto);        
+
+        private void DoSwitchThemes(ThemeMode newTheme)
+        {
+            ThemeManager.ConfiguredMode = newTheme;
+            RefreshThemeIndicators();
+        }
+
+        private void RefreshThemeIndicators()
+        {
+            IsDarkThemeEnabled = ThemeManager.ConfiguredMode == ThemeMode.Dark;
+            IsLightThemeEnabled = ThemeManager.ConfiguredMode == ThemeMode.Light;
+            IsAutoThemeEnabled = ThemeManager.ConfiguredMode == ThemeMode.Auto;
+        }
 
         private void DoGetImagePath()
         {

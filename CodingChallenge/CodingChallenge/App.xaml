@@ -3,7 +3,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Framework/Converters/ConvertersDictionary.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="Themes/DarkTheme.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:CodingChallenge.ViewModel" />
         </ResourceDictionary>

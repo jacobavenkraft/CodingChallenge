@@ -63,8 +63,10 @@ namespace CodingChallenge.Configuration
 
         private static bool IsThemeUri(Uri uri)
         {
-            if(uri.OriginalString == Settings.Instance.DarkThemeUri
-                || uri.OriginalString == Settings.Instance.LightThemeUri)
+            var uriString = uri?.OriginalString ?? string.Empty;
+
+            if(uriString == Settings.Instance.DarkThemeUri
+            || uriString == Settings.Instance.LightThemeUri)
             {
                 return true;
             }
@@ -74,6 +76,8 @@ namespace CodingChallenge.Configuration
 
         public static void RefreshTheme()
         {
+            Settings.Instance.CurrentTheme = ConfiguredMode;
+
             string uriString;
 
             switch (ActualMode)
