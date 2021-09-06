@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CodingChallenge.RoamingImage
 {
     /// <summary>
-    /// Interaction logic for RoamingImageView.xaml
+    /// Interaction logic for RoamingImageWindow.xaml
     /// </summary>
-    public partial class RoamingImageView : UserControl
+    public partial class RoamingImageWindow : Window
     {
-        public RoamingImageView()
+        public RoamingImageWindow()
         {
             InitializeComponent();
         }

@@ -48,7 +48,12 @@
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Personalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsThemeListener.1.0.0\lib\net40\System.Personalization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -70,17 +75,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\Settings.cs" />
+    <Compile Include="Configuration\ThemeManager.cs" />
+    <Compile Include="Extensions\ThemeExtensions.cs" />
+    <Compile Include="Framework\AttachedBehaviors\FrameworkElementAttachedBehaviors.cs" />
+    <Compile Include="Framework\AttachedBehaviors\WindowAttachedBehaviors.cs" />
     <Compile Include="Framework\BaseModel.cs" />
     <Compile Include="Framework\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Framework\Converters\ScalingConverter.cs" />
     <Compile Include="Framework\Converters\TransportStatusToVisibilityConverter.cs" />
     <Compile Include="Framework\Decorators\MouseTrackerDecorator.cs" />
-    <Compile Include="RoamingImage\IRoamingImageController.cs" />
+    <Compile Include="Interfaces\IMouseMoveListener.cs" />
+    <Compile Include="Interfaces\ISizeChangeListener.cs" />
+    <Compile Include="Interfaces\IRoamingImageController.cs" />
     <Compile Include="RoamingImage\RoamingImageController.cs" />
     <Compile Include="RoamingImage\RoamingImageView.xaml.cs">
       <DependentUpon>RoamingImageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RoamingImage\RoamingImageViewModel.cs" />
-    <Compile Include="Transport\ITransportController.cs" />
+    <Compile Include="Interfaces\ITransportController.cs" />
+    <Compile Include="RoamingImage\RoamingImageWindow.xaml.cs">
+      <DependentUpon>RoamingImageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Transport\TransportController.cs" />
     <Compile Include="Transport\TransportStatus.cs" />
     <Compile Include="Transport\TransportView.xaml.cs">
@@ -106,6 +122,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RoamingImage\RoamingImageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RoamingImage\RoamingImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\DarkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\LightTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,8 +169,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Resource Include="RoamingImage\Untitled.png" />
+    <Resource Include="Resources\Image1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Image2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

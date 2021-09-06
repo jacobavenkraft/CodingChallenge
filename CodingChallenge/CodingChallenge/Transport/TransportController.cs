@@ -1,4 +1,5 @@
 ﻿using CodingChallenge.Framework;
+using CodingChallenge.Interfaces;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -11,6 +12,11 @@ namespace CodingChallenge.Transport
 
         private AutoResetEvent timeCodeDeactivated = new AutoResetEvent(false);
         private Thread timeCodeRefreshThread;
+
+        public event Action<ITransportController> RecordingStart;
+        public event Action<ITransportController> RecordingStop;
+        public event Action<ITransportController> PlayingStart;
+        public event Action<ITransportController> PlayingStop;
 
         public TransportController()
         {
@@ -131,6 +137,7 @@ namespace CodingChallenge.Transport
             PlayBeginTimestamp = DateTime.Now;
             PlayEndTimestamp = DateTime.MaxValue;
             Status = TransportStatus.Playing;
+            PlayingStart?.Invoke(this);
         }
 
         public void PlayCue()
@@ -154,6 +161,7 @@ namespace CodingChallenge.Transport
             RecordBeginTimestamp = DateTime.Now;
             RecordEndTimestamp = DateTime.MaxValue;
             Status = TransportStatus.Recording;
+            RecordingStart?.Invoke(this);
         }
 
         public void RecordCue()
@@ -190,9 +198,11 @@ namespace CodingChallenge.Transport
             {
                 case TransportStatus.Playing:
                     PlayEndTimestamp = DateTime.Now;
+                    PlayingStop?.Invoke(this);
                     break;
                 case TransportStatus.Recording:
                     RecordEndTimestamp = DateTime.Now;
+                    RecordingStop?.Invoke(this);
                     break;
                 default:
                     break;
@@ -230,5 +240,7 @@ namespace CodingChallenge.Transport
             timeCodeRefreshThread.Join();
             timeCodeRefreshThread = null;
         }
+
+
     }
 }

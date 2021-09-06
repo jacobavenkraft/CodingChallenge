@@ -1,11 +1,15 @@
-﻿using CodingChallenge.Framework;
+﻿using CodingChallenge.Configuration;
+using CodingChallenge.Framework;
+using CodingChallenge.Interfaces;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace CodingChallenge.RoamingImage
 {
-    public class RoamingImageController : BaseModel, IRoamingImageController
+    public class RoamingImageController : BaseModel, IRoamingImageController, ISizeChangeListener
     {
         private Thread updateThread;
         private AutoResetEvent roamingDeactivatedEvent = new AutoResetEvent(false);
@@ -17,7 +21,8 @@ namespace CodingChallenge.RoamingImage
 
         public RoamingImageController()
         {
-
+            RoamingSpeed = Settings.Instance.RoamingSpeed;
+            ImageUri = Settings.Instance.ImageUri;
         }
 
         protected override void RaisePropertyChanged([CallerMemberName] string property = "")
@@ -30,12 +35,20 @@ namespace CodingChallenge.RoamingImage
                 case nameof(ImageWidth):
                     ReCalculateRoamingBoundaries();
                     break;
+                case nameof(ImageUri):
+                    Settings.Instance.ImageUri = ImageUri;
+                    break;
+                case nameof(RoamingSpeed):
+                    Settings.Instance.RoamingSpeed = RoamingSpeed;
+                    break;
                 default:
                     break;
             }
         }
 
         private TimeSpan RefreshInterval { get; set; } = TimeSpan.FromMilliseconds(100);
+
+        public string ImageUri { get => Get<string>(); set => Set(value); }
 
         public int RoamingSpeed { get => Get<int>(); set => Set(value); }
 
@@ -54,7 +67,7 @@ namespace CodingChallenge.RoamingImage
         public double CanvasWidth { get => Get<double>(); set => Set(value); }
 
         public double CanvasHeight { get => Get<double>(); set => Set(value); }
-
+        
         public void StartRoaming()
         {
             if (updateThread != null)
@@ -85,7 +98,7 @@ namespace CodingChallenge.RoamingImage
             minimumPositionX = 0.0 - (ImageWidth / 2.0);
             minimumPositionY = 0.0 - (ImageHeight / 2.0);
             maximumPositionX = minimumPositionX + ImageWidth;
-            maximumPositionY = maximumPositionY + ImageHeight;
+            maximumPositionY = minimumPositionY + ImageHeight;
         }
 
         private void RoamingUpdateThreadProc()
@@ -95,16 +108,20 @@ namespace CodingChallenge.RoamingImage
                 double newPositionX = PositionX + (RoamingHorizontalSteps * RoamingSpeed);
                 double newPositionY = PositionY + (RoamingVerticalSteps * RoamingSpeed);
 
-                if (newPositionX >= minimumPositionX && newPositionX <= maximumPositionX)
-                {
-                    PositionX = newPositionX;
-                }
+                newPositionX = Math.Min(maximumPositionX, Math.Max(minimumPositionX, newPositionX));
+                newPositionY = Math.Min(maximumPositionY, Math.Max(minimumPositionY, newPositionY));
 
-                if (newPositionY >= minimumPositionY && newPositionY <= maximumPositionY)
-                {
-                    PositionY = newPositionY;
-                }
+                PositionX = newPositionX;
+                PositionY = newPositionY;
             }
+        }
+
+        void ISizeChangeListener.SizeChanged(Size newSize)
+        {
+            ImageWidth = newSize.Width;
+            ImageHeight = newSize.Height;
+            CanvasWidth = newSize.Width * 2.0;
+            CanvasHeight = newSize.Height * 2.0;
         }
     }
 }

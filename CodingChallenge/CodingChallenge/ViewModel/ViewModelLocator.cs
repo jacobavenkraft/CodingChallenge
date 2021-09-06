@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using CodingChallenge.Interfaces;
 using CodingChallenge.RoamingImage;
 using CodingChallenge.Transport;
 using CommonServiceLocator;

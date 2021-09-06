@@ -1,6 +1,7 @@
-﻿using System;
+﻿using CodingChallenge.Transport;
+using System;
 
-namespace CodingChallenge.Transport
+namespace CodingChallenge.Interfaces
 {
     public interface ITransportController
     {
@@ -31,5 +32,13 @@ namespace CodingChallenge.Transport
         void ResetTimeCode();
 
         void Initialize();
+
+        event Action<ITransportController> RecordingStart;
+
+        event Action<ITransportController> RecordingStop;
+
+        event Action<ITransportController> PlayingStart;
+
+        event Action<ITransportController> PlayingStop;
     }
 }

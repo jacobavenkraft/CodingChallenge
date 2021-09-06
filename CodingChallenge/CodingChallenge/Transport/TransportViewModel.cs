@@ -1,4 +1,5 @@
 ﻿using CodingChallenge.Framework;
+using CodingChallenge.Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Timers;

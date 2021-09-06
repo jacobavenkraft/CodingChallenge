@@ -5,4 +5,6 @@
     <local:BoolToVisibilityConverter x:Key="BoolToHiddenConverter" WhenTrue="Hidden" WhenFalse="Visible"></local:BoolToVisibilityConverter>
     <local:BoolToVisibilityConverter x:Key="BoolToCollapsedConverter" WhenTrue="Collapsed" WhenFalse="Visible"></local:BoolToVisibilityConverter>
     <local:TransportStatusToVisibilityConverter x:Key="IsRecordingStatusToVisibilityConverter" TargetStatus="Recording" WhenEqualTargetStatus="Visible" WhenNotEqualTargetStatus="Hidden"></local:TransportStatusToVisibilityConverter>
+    <local:ScalingConverter x:Key="ScaleByTwoConverter" ScalingFactor="2.0"></local:ScalingConverter>
+    <local:ScalingConverter x:Key="ScaleByThreeConverter" ScalingFactor="3.0"></local:ScalingConverter>
 </ResourceDictionary>
