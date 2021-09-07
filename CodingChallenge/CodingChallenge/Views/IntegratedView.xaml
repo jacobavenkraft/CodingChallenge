@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Grid.RowSpan="3" BorderBrush="LightGreen" BorderThickness="3" Padding="3">
+        <Border Grid.RowSpan="3" BorderBrush="LightGreen" BorderThickness="0" Padding="3">
             <local:RoamingImageView></local:RoamingImageView>
         </Border>
         <Viewbox Margin="8" Grid.RowSpan="3"
@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Slider Margin="8,0,8,0" VerticalAlignment="Center" ToolTip="Roaming Speed" Minimum="1" Maximum="50" Value="{Binding RoamingImageController.RoamingSpeed}"></Slider>
-            <local:TransportOverlayView Grid.Column="1"></local:TransportOverlayView>
+            <local:TransportOverlayView Grid.Column="1" Margin="4"></local:TransportOverlayView>
         </Grid>
     </Grid>
 </UserControl>
