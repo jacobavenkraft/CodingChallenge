@@ -24,6 +24,10 @@
         </Setter>
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"></Setter>
     </Style>
+
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"></Setter>
+    </Style>
     
     <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#3D26A0DA"/>
     <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF26A0DA"/>

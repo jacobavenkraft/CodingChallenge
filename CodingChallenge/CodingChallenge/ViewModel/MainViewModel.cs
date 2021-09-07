@@ -2,16 +2,24 @@ using CodingChallenge.Configuration;
 using CodingChallenge.Framework;
 using CodingChallenge.Interfaces;
 using CodingChallenge.RoamingImage;
+using CodingChallenge.Views;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
 namespace CodingChallenge.ViewModel
 {
+    public enum ViewType
+    {
+        SeparateWindow,
+        Integrated
+    }
+
     /// <summary>
     /// This class contains properties that the main View can data bind to.
     /// <para>
@@ -45,6 +53,7 @@ namespace CodingChallenge.ViewModel
             EnableDarkThemeCommand = new RelayCommand(DoEnableDarkTheme);
             EnableLightThemeCommand = new RelayCommand(DoEnableLightTheme);
             EnableAutoThemeCommand = new RelayCommand(DoEnableAutoTheme);
+            ToggleViewTypeCommand = new RelayCommand(DoToggleViewType);
             RoamingImageController = ServiceLocator.Current.GetInstance<IRoamingImageController>();
             TransportController = ServiceLocator.Current.GetInstance<ITransportController>();
             TransportController.PlayingStart += TransportController_PlayingStart;
@@ -52,6 +61,21 @@ namespace CodingChallenge.ViewModel
             TransportController.RecordingStop += TransportController_RecordingStop;
             RefreshTitle();
             RefreshThemeIndicators();
+        }
+
+        protected override void RaisePropertyChanged([CallerMemberName] string property = "")
+        {
+            base.RaisePropertyChanged(property);
+
+            switch (property)
+            {
+                case nameof(ViewType):
+                    base.RaisePropertyChanged(nameof(UseIntegratedView));
+                    base.RaisePropertyChanged(nameof(UseSeparateWindowView));
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void HideRoamingImageWindow()
@@ -62,13 +86,18 @@ namespace CodingChallenge.ViewModel
 
         private void ShowRoamingImageWindow()
         {
+            if (UseIntegratedView)
+            {
+                return;
+            }
+
             if (!Application.Current.Dispatcher.CheckAccess())
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(ShowRoamingImageWindow));
                 return;
             }
 
-            if(roamingImageWindow != null)
+            if (roamingImageWindow != null)
             {
                 roamingImageWindow.Activate();
                 return;
@@ -99,6 +128,8 @@ namespace CodingChallenge.ViewModel
 
         public ICommand GetImagePathCommand { get => Get<ICommand>(); set => Set(value); }
 
+        public ICommand ToggleViewTypeCommand { get => Get<ICommand>(); set => Set(value); }
+
         public string ImageUri => RoamingImageController?.ImageUri ?? string.Empty;
 
         public string Title { get => Get<string>(); set => Set(value); }
@@ -117,16 +148,37 @@ namespace CodingChallenge.ViewModel
 
         public ICommand EnableAutoThemeCommand { get => Get<ICommand>(); set => Set(value); }
 
+        public ViewType ViewType { get => Get<ViewType>(); set => Set(value); }
+
+        public bool UseIntegratedView { get => ViewType == ViewType.Integrated; set { } }
+
+        public bool UseSeparateWindowView { get => ViewType == ViewType.SeparateWindow; set { } }
+
         private void DoEnableDarkTheme() => DoSwitchThemes(ThemeMode.Dark);
 
         private void DoEnableLightTheme() => DoSwitchThemes(ThemeMode.Light);
 
-        private void DoEnableAutoTheme() => DoSwitchThemes(ThemeMode.Auto);        
+        private void DoEnableAutoTheme() => DoSwitchThemes(ThemeMode.Auto);
 
         private void DoSwitchThemes(ThemeMode newTheme)
         {
             ThemeManager.ConfiguredMode = newTheme;
             RefreshThemeIndicators();
+        }
+
+        private void DoToggleViewType()
+        {
+            switch(ViewType)
+            {
+                case ViewType.Integrated:
+                    ViewType = ViewType.SeparateWindow;
+                    break;
+                case ViewType.SeparateWindow:
+                    ViewType = ViewType.Integrated;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void RefreshThemeIndicators()

@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace CodingChallenge.RoamingImage
 {
-    public class RoamingImageController : BaseModel, IRoamingImageController, ISizeChangeListener
+    public class RoamingImageController : BaseModel, IRoamingImageController, ISizeChangeListener, IMouseMoveListener
     {
         private Thread updateThread;
         private AutoResetEvent roamingDeactivatedEvent = new AutoResetEvent(false);
@@ -122,6 +122,40 @@ namespace CodingChallenge.RoamingImage
             ImageHeight = newSize.Height;
             CanvasWidth = newSize.Width * 2.0;
             CanvasHeight = newSize.Height * 2.0;
+        }
+
+        private void RefreshRoamingSteps(Point newPosition)
+        {
+            if (newPosition.X < ImageWidth)
+            {
+                RoamingHorizontalSteps = -1;
+            }
+            else if (newPosition.X > ImageWidth)
+            {
+                RoamingHorizontalSteps = 1;
+            }
+            else
+            {
+                RoamingHorizontalSteps = 0;
+            }
+
+            if (newPosition.Y < ImageHeight)
+            {
+                RoamingVerticalSteps = -1;
+            }
+            else if (newPosition.Y > ImageHeight)
+            {
+                RoamingVerticalSteps = 1;
+            }
+            else
+            {
+                RoamingVerticalSteps = 0;
+            }
+        }
+
+        void IMouseMoveListener.MouseMove(Point newPosition)
+        {
+            RefreshRoamingSteps(newPosition);
         }
     }
 }

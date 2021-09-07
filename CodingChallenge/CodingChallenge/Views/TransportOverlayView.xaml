@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="CodingChallenge.Views.TransportOverlayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CodingChallenge.Views"
+             mc:Ignorable="d" 
+             DataContext="{Binding Transport, Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="1" Width="{Binding ActualWidth, ElementName=timeCode}" Height="{Binding ActualHeight, ElementName=timeCode}" Fill="{DynamicResource WindowBackgroundBrush}" Opacity=".4"></Rectangle>
+            <TextBlock x:Name="timeCode" Grid.Column="1" Margin="8" Background="Transparent" Text="{Binding Controller.TimeCode, StringFormat=hh\\:mm\\:ss\\.f, FallbackValue=00:00:00.0}" FontSize="20"></TextBlock>
+            <Grid x:Name="buttonGrid" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button ToolTip="Stop" Command="{Binding StopCommand}" Width="28" Height="28">
+                    <Rectangle Margin="4" Width="15" Height="15" Fill="Black"></Rectangle>
+                </Button>
+                <Button ToolTip="Record" Command="{Binding RecordCommand}" Width="28" Height="28" Grid.Column="1">
+                    <Ellipse Margin="4" Width="15" Height="15" Fill="Red"></Ellipse>
+                </Button>
+            </Grid>
+            <Ellipse Width="15" Height="15" Grid.Column="3" Margin="4"
+                     Fill="Green" ToolTip="Standby"></Ellipse>
+            <Ellipse Width="15" Height="15" Grid.Column="3" Margin="4"
+                     Fill="Red" ToolTip="LIVE" 
+                     Visibility="{Binding Controller.Status, Converter={StaticResource IsRecordingStatusToVisibilityConverter}}"></Ellipse>
+        </Grid>
+    </Grid>
+</UserControl>

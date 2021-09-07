@@ -1,7 +1,8 @@
 ﻿using CodingChallenge.Interfaces;
+using CodingChallenge.Transport;
 using System.Windows.Controls;
 
-namespace CodingChallenge.Transport
+namespace CodingChallenge.Views
 {
     /// <summary>
     /// Interaction logic for TransportView.xaml

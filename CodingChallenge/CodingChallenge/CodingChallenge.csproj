@@ -85,21 +85,32 @@
     <Compile Include="Framework\Converters\ScalingConverter.cs" />
     <Compile Include="Framework\Converters\TransportStatusToVisibilityConverter.cs" />
     <Compile Include="Framework\Decorators\MouseTrackerDecorator.cs" />
+    <Compile Include="Interfaces\IIntegratedViewModel.cs" />
     <Compile Include="Interfaces\IMouseMoveListener.cs" />
+    <Compile Include="Interfaces\IRoamingImageViewModel.cs" />
     <Compile Include="Interfaces\ISizeChangeListener.cs" />
     <Compile Include="Interfaces\IRoamingImageController.cs" />
+    <Compile Include="Interfaces\ITransportViewModel.cs" />
     <Compile Include="RoamingImage\RoamingImageController.cs" />
-    <Compile Include="RoamingImage\RoamingImageView.xaml.cs">
+    <Compile Include="RoamingImage\RoamingImageControllerMock.cs" />
+    <Compile Include="ViewModel\IntegratedViewModel.cs" />
+    <Compile Include="Views\IntegratedView.xaml.cs">
+      <DependentUpon>IntegratedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RoamingImageView.xaml.cs">
       <DependentUpon>RoamingImageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RoamingImage\RoamingImageViewModel.cs" />
     <Compile Include="Interfaces\ITransportController.cs" />
-    <Compile Include="RoamingImage\RoamingImageWindow.xaml.cs">
+    <Compile Include="Views\RoamingImageWindow.xaml.cs">
       <DependentUpon>RoamingImageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Transport\TransportController.cs" />
     <Compile Include="Transport\TransportStatus.cs" />
-    <Compile Include="Transport\TransportView.xaml.cs">
+    <Compile Include="Views\TransportOverlayView.xaml.cs">
+      <DependentUpon>TransportOverlayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransportView.xaml.cs">
       <DependentUpon>TransportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Transport\TransportViewModel.cs" />
@@ -121,11 +132,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="RoamingImage\RoamingImageView.xaml">
+    <Page Include="Views\IntegratedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RoamingImage\RoamingImageWindow.xaml">
+    <Page Include="Views\RoamingImageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RoamingImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,7 +152,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Transport\TransportView.xaml">
+    <Page Include="Views\TransportOverlayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace CodingChallenge.Transport
 {
-    public class TransportViewModel : BaseModel
+    public class TransportViewModel : BaseModel, ITransportViewModel
     {
         private Timer cueTimer = new Timer(1000);
 

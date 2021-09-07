@@ -78,7 +78,11 @@ namespace CodingChallenge.Framework.AttachedBehaviors
             {
                 frameworkElement.MouseMove += (s, e) =>
                 {
-                    listener.MouseMove(e.GetPosition(frameworkElement));
+                    var isEnabled = GetMouseMoveListenerEnabled(frameworkElement);
+                    if (isEnabled)
+                    {
+                        listener.MouseMove(e.GetPosition(frameworkElement));
+                    }
                 };
             }
         }
@@ -91,6 +95,23 @@ namespace CodingChallenge.Framework.AttachedBehaviors
         public static void SetMouseMoveListener(DependencyObject dependencyObject, IMouseMoveListener listener)
         {
             dependencyObject.SetValue(MouseMoveListenerProperty, listener);
+        }
+
+        public static DependencyProperty MouseMoveListenerEnabledProperty =
+            DependencyProperty.RegisterAttached(
+                "MouseMoveListenerEnabled",
+                typeof(bool),
+                typeof(FrameworkElementAttachedBehaviors),
+                new PropertyMetadata(true));
+
+        public static bool GetMouseMoveListenerEnabled(DependencyObject dependencyObject)
+        {
+            return (bool)dependencyObject.GetValue(MouseMoveListenerEnabledProperty);
+        }
+
+        public static void SetMouseMoveListenerEnabled(DependencyObject dependencyObject, bool isEnabled)
+        {
+            dependencyObject.SetValue(MouseMoveListenerEnabledProperty, isEnabled);
         }
     }
 }

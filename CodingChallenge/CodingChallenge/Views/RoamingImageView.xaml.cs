@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodingChallenge.RoamingImage
+namespace CodingChallenge.Views
 {
     /// <summary>
     /// Interaction logic for RoamingImageView.xaml

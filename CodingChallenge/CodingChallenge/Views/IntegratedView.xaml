@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="CodingChallenge.Views.IntegratedView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CodingChallenge.Views"
+             mc:Ignorable="d"
+             DataContext="{Binding Integrated,Source={StaticResource Locator}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.RowSpan="3" BorderBrush="LightGreen" BorderThickness="3" Padding="3">
+            <local:RoamingImageView></local:RoamingImageView>
+        </Border>
+        <Viewbox Margin="8" Grid.RowSpan="3"
+                 Height="{Binding RoamingImageController.CanvasHeight}"
+                 Width="{Binding RoamingImageController.CanvasWidth}"
+                 Visibility="{Binding TransportViewModel.CueCountdownVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock Text="{Binding TransportViewModel.CueCountdown}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="72"                   
+                   Foreground="Red"></TextBlock>
+        </Viewbox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Slider Margin="8,0,8,0" VerticalAlignment="Center" ToolTip="Roaming Speed" Minimum="1" Maximum="50" Value="{Binding RoamingImageController.RoamingSpeed}"></Slider>
+            <local:TransportOverlayView Grid.Column="1"></local:TransportOverlayView>
+        </Grid>
+    </Grid>
+</UserControl>

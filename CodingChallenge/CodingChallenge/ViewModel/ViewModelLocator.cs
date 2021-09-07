@@ -34,22 +34,25 @@ namespace CodingChallenge.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
-            SimpleIoc.Default.Register<ITransportController, TransportController>();
-            SimpleIoc.Default.Register<IRoamingImageController, RoamingImageController>();
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                // Create design time view services and models
+                //SimpleIoc.Default.Register<IDataService, DesignDataService>();
+                SimpleIoc.Default.Register<ITransportController, TransportController>();
+                SimpleIoc.Default.Register<IRoamingImageController, RoamingImageControllerMock>();
+            }
+            else
+            {
+                // Create run time view services and models
+                //SimpleIoc.Default.Register<IDataService, DataService>();
+                SimpleIoc.Default.Register<ITransportController, TransportController>();
+                SimpleIoc.Default.Register<IRoamingImageController, RoamingImageController>();
+            }
+            
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<TransportViewModel>();
-            SimpleIoc.Default.Register<RoamingImageViewModel>();
+            SimpleIoc.Default.Register<ITransportViewModel, TransportViewModel>();
+            SimpleIoc.Default.Register<IRoamingImageViewModel, RoamingImageViewModel>();
+            SimpleIoc.Default.Register<IntegratedViewModel>();
         }
 
         public MainViewModel Main
@@ -60,19 +63,27 @@ namespace CodingChallenge.ViewModel
             }
         }
         
-        public TransportViewModel Transport
+        public ITransportViewModel Transport
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<TransportViewModel>();
+                return ServiceLocator.Current.GetInstance<ITransportViewModel>();
             }
         }
 
-        public RoamingImageViewModel RoamingImage
+        public IRoamingImageViewModel RoamingImage
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<RoamingImageViewModel>();
+                return ServiceLocator.Current.GetInstance<IRoamingImageViewModel>();
+            }
+        }
+
+        public IntegratedViewModel Integrated
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<IntegratedViewModel>();
             }
         }
 

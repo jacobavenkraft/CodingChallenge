@@ -4,13 +4,11 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CodingChallenge.RoamingImage
 {
-    public class RoamingImageViewModel : BaseModel, IMouseMoveListener
+    public class RoamingImageViewModel : BaseModel, IRoamingImageViewModel
     {
         public RoamingImageViewModel(IRoamingImageController controller)
         {
@@ -39,58 +37,13 @@ namespace CodingChallenge.RoamingImage
             }
         }
 
-        protected override void RaisePropertyChanged([CallerMemberName] string property = "")
-        {
-            base.RaisePropertyChanged(property);
-
-            switch(property)
-            {
-                case nameof(MousePosition):
-                    RefreshRoamingSteps();
-                    break;
-                default:
-                    break;
-            }
-        }
-
         public string Title { get => Get<string>(); set => Set(value); }
 
         public IRoamingImageController Controller { get => Get<IRoamingImageController>(); set => Set(value); }
 
-        public Point MousePosition { get => Get<Point>(); set => Set(value); }
-
         public ICommand StartRoamingCommand { get => Get<ICommand>(); set => Set(value); }
 
         public ICommand StopRoamingCommand { get => Get<ICommand>(); set => Set(value); }
-
-        private void RefreshRoamingSteps()
-        {
-            if (MousePosition.X < Controller.ImageWidth)
-            {
-                Controller.RoamingHorizontalSteps = -1;
-            }
-            else if (MousePosition.X > Controller.ImageWidth)
-            {
-                Controller.RoamingHorizontalSteps = 1;
-            }
-            else
-            {
-                Controller.RoamingHorizontalSteps = 0;
-            }
-
-            if (MousePosition.Y < Controller.ImageHeight)
-            {
-                Controller.RoamingVerticalSteps = -1;
-            }
-            else if (MousePosition.Y > Controller.ImageHeight)
-            {
-                Controller.RoamingVerticalSteps = 1;
-            }
-            else
-            {
-                Controller.RoamingVerticalSteps = 0;
-            }
-        }
 
         private void RefreshTitle()
         {
@@ -117,11 +70,6 @@ namespace CodingChallenge.RoamingImage
         private void DoStopRoaming()
         {
             Controller.StopRoaming();
-        }
-
-        void IMouseMoveListener.MouseMove(Point newPosition)
-        {
-            MousePosition = newPosition;
         }
     }
 }
