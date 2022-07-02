@@ -25,10 +25,14 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button ToolTip="Stop" Command="{Binding StopCommand}" Width="28" Height="28">
+                <Button ToolTip="Stop" 
+                        Command="{Binding StopCommand}" 
+                        Width="28" Height="28">
                     <Rectangle Margin="4" Width="15" Height="15" Fill="Black"></Rectangle>
                 </Button>
-                <Button ToolTip="Record" Command="{Binding RecordCommand}" Width="28" Height="28" Grid.Column="1">
+                <Button ToolTip="Record" 
+                        Command="{Binding RecordCommand}" 
+                        Width="28" Height="28" Grid.Column="1">
                     <Ellipse Margin="4" Width="15" Height="15" Fill="Red"></Ellipse>
                 </Button>
             </Grid>
@@ -36,7 +40,7 @@
                      Fill="Green" ToolTip="Standby"></Ellipse>
             <Ellipse Width="15" Height="15" Grid.Column="3" Margin="4"
                      Fill="Red" ToolTip="LIVE" 
-                     Visibility="{Binding Controller.Status, Converter={StaticResource IsRecordingStatusToVisibilityConverter}}"></Ellipse>
+                     Visibility="{Binding Controller.Status, Converter={StaticResource IsNotRecordingToHiddenConverter}}"></Ellipse>
         </Grid>
     </Grid>
 </UserControl>

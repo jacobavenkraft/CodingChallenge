@@ -29,7 +29,7 @@
                      Fill="Green" ToolTip="Standby"></Ellipse>
             <Ellipse Width="20" Height="20" Margin="4" Grid.Column="1" 
                      Fill="Red" ToolTip="LIVE" 
-                     Visibility="{Binding Controller.Status, Converter={StaticResource IsRecordingStatusToVisibilityConverter}}"></Ellipse>
+                     Visibility="{Binding Controller.Status, Converter={StaticResource IsNotRecordingToHiddenConverter}}"></Ellipse>
             <Button Margin="8" Grid.Column="2" Width="75" Height="25" 
                     Visibility="{Binding Controller.CanRecordCue, Converter={StaticResource BoolToVisibilityConverter}}" 
                     Command="{Binding RecordCommand}">Start</Button>
