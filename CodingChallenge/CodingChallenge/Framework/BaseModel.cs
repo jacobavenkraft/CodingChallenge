@@ -6,6 +6,7 @@ namespace CodingChallenge.Framework
 {
     public class BaseModel : INotifyPropertyChanged
     {
+        //property table
         protected readonly Dictionary<string, object> propertyTable = new Dictionary<string, object>();
 
         public event PropertyChangedEventHandler PropertyChanged;
